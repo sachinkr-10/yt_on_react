@@ -10,23 +10,41 @@ class Layout extends Component{
     constructor(props){
         super(props)
         this.state = {
-            videos : []
+            videos : [],
+            searchTerm : 'Mercedes AMG SLS',
+            selectedVideo : null
         }
 
+        this.loadVideo();
+    }
+
+    loadVideo = ()=>{
         YTSearch({key : config_dev.API_KEY || config_prod.API_KEY,
-            term : 'Naezy'},
+            term : this.state.searchTerm},
             (videos)=>{
-                this.setState({videos})
+                this.setState({
+                    videos : videos,
+                    selectedVideo : videos[0]
+                })
             })
     }
 
+    changeSelectedVideo = (video)=>{
+        this.setState({selectedVideo :video})
+    }
+
+    changeSearchTerm = (term)=>{
+        this.setState({searchTerm : term},()=>{this.loadVideo()})
+    }
     render(){
 
         return(
             <div className='row'>
-            <SearchBox/>
-            {this.state.videos.length !== 0 ? <VideoPlayer default={this.state.videos[0]}/> : <div>Loading...</div>}
-            <VideoList videos={this.state.videos}/>
+            <SearchBox onSearch={this.changeSearchTerm}/>
+            {this.state.selectedVideo !== null ? <VideoPlayer default={this.state.selectedVideo}/> : <div>Loading...</div>}
+            <VideoList 
+            onVideoSelect={this.changeSelectedVideo} 
+            videos={this.state.videos}/>
             </div>
         )
     }

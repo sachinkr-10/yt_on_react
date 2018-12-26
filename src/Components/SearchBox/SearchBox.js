@@ -12,14 +12,14 @@ class SearchBox extends Component{
 
     changeHandler = (event) =>{
         var value = event.target.value;
-
         if(value.length !== 0){
             this.setState({value})
         }
     }
 
-    submitHandler = () => {
-
+    submitHandler = (event) => {
+        event.preventDefault()
+        this.props.onSearch(this.state.value)
     }
 
     render(){
