@@ -1,6 +1,6 @@
 
 const config = {
-    API_KEY : 'AIzaSyAvMPmopc6eLMIMRgkMfVXx8R1XiDKz_kM'
+    API_KEY : 'AIzaSyCoMcFCawVYrXvQ6x_bJqH5CFGBiMx1sAY'
 }
 
 export default config;
